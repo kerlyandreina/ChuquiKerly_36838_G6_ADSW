@@ -1,0 +1,59 @@
+@startuml
+title CRUD de estudiantes - arquitectura de tres capas
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+package "presentacion" {
+  class Main {
+    + main(args: String[]): void
+    - mostrarMenu(): void
+    - registrar(entrada: Scanner, control: ControlEstudiante): boolean
+    - actualizar(entrada: Scanner, control: ControlEstudiante): boolean
+    - eliminar(entrada: Scanner, control: ControlEstudiante): boolean
+    - listar(control: ControlEstudiante): void
+    - leerEntero(entrada: Scanner, mensaje: String): Integer
+    - leerTexto(entrada: Scanner, mensaje: String): String
+  }
+}
+
+package "logica" {
+  class ControlEstudiante {
+    - repositorio: RepositorioEstudiante
+    + agregarEstudiante(id: int, nombre: String, edad: int): String
+    + actualizarEstudiante(id: int, nombre: String, edad: int): String
+    + eliminarEstudiante(id: int): String
+    + listarTodos(): List<Estudiante>
+    + validarDatos(id: int, nombre: String, edad: int): boolean
+  }
+}
+
+package "datos" {
+  class RepositorioEstudiante {
+    - estudiantes: Map<Integer, Estudiante>
+    + guardar(estudiante: Estudiante): void
+    + buscarPorId(id: int): Estudiante
+    + actualizar(estudiante: Estudiante): void
+    + eliminar(id: int): void
+    + listarTodos(): List<Estudiante>
+    + existeId(id: int): boolean
+  }
+}
+
+package "modelo" {
+  class Estudiante {
+    - id: int
+    - nombre: String
+    - edad: int
+    + getId(): int
+    + getNombre(): String
+    + getEdad(): int
+  }
+}
+
+Main --> ControlEstudiante : invoca CRUD
+Main ..> Scanner : lee terminal
+ControlEstudiante --> RepositorioEstudiante : coordina
+ControlEstudiante ..> Estudiante : valida y crea
+RepositorioEstudiante o--> Estudiante : almacena
+@enduml
