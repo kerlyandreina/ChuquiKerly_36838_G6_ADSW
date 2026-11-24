@@ -1,0 +1,6 @@
+ec\edu\espe\analisis\crudestudiantes\datos\Iterador.class
+ec\edu\espe\analisis\crudestudiantes\modelo\Estudiante.class
+ec\edu\espe\analisis\crudestudiantes\datos\RepositorioEstudiante.class
+ec\edu\espe\analisis\crudestudiantes\presentacion\Main.class
+ec\edu\espe\analisis\crudestudiantes\datos\IteradorEstudiante.class
+ec\edu\espe\analisis\crudestudiantes\logica\ControlEstudiante.class
