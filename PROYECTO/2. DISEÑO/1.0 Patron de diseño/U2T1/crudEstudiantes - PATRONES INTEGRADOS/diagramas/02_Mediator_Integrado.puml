@@ -1,0 +1,53 @@
+@startuml
+title Mediator integrado con SRP y DIP
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+
+package "Presentacion" {
+  class Main
+}
+
+package "Configuracion" {
+  class FabricaCrudEstudiantes {
+    +crearMediador(): MediadorCrud
+  }
+}
+
+package "Logica" {
+  interface MediadorCrud {
+    +agregarEstudiante(id: int, nombre: String, edad: int): String
+    +actualizarEstudiante(id: int, nombre: String, edad: int): String
+    +eliminarEstudiante(id: int): String
+    +cambiarEstado(id: int, opcion: int): String
+    +crearIterador(): Iterador
+  }
+  class MediadorCrudEstudiantes {
+    -control: ControlEstudiante
+  }
+  class ControlEstudiante {
+    -repositorio: RepositorioEstudiante
+    +agregarEstudiante(...): String
+    +actualizarEstudiante(...): String
+    +eliminarEstudiante(...): String
+  }
+  interface RepositorioEstudiante
+  interface Iterador
+}
+
+package "Datos" {
+  class RepositorioEstudianteMemoria
+}
+
+FabricaCrudEstudiantes ..> RepositorioEstudianteMemoria : ensambla
+FabricaCrudEstudiantes ..> ControlEstudiante : ensambla
+FabricaCrudEstudiantes ..> MediadorCrudEstudiantes : ensambla
+Main ..> FabricaCrudEstudiantes : crea dependencias
+Main ..> MediadorCrud : usa contrato
+MediadorCrudEstudiantes ..|> MediadorCrud
+MediadorCrudEstudiantes --> ControlEstudiante : coordina solicitudes
+ControlEstudiante --> RepositorioEstudiante : depende de abstraccion
+RepositorioEstudianteMemoria ..|> RepositorioEstudiante
+@enduml
