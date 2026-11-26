@@ -1,8 +1,8 @@
 package ec.edu.espe.analisis.crudestudiantes.logica;
 
 /**
- * PATRÓN MEDIATOR: contrato de comunicación entre la presentación y el
- * servicio de CRUD. La presentación no conoce el repositorio.
+ * PATRÓN MEDIATOR: contrato por el que la presentación solicita operaciones
+ * del CRUD sin invocar directamente el controlador.
  */
 public interface MediadorCrud {
     String agregarEstudiante(int id, String nombre, int edad);

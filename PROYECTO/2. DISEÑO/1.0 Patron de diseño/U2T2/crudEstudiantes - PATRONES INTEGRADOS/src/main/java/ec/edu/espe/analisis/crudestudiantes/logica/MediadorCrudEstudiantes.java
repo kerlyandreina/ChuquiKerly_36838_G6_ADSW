@@ -3,11 +3,8 @@ package ec.edu.espe.analisis.crudestudiantes.logica;
 import java.util.Objects;
 
 /**
- * PATRÓN MEDIATOR (Concrete Mediator): recibe las solicitudes de la vista
- * y las coordina con el servicio de estudiantes.
- *
- * PRINCIPIO SRP: esta clase media las llamadas; las reglas del CRUD viven
- * en ControlEstudiante.
+ * PATRÓN MEDIATOR (Concrete Mediator): centraliza las solicitudes de la vista
+ * y las delega al controlador, donde se ejecutan las reglas del CRUD.
  */
 public final class MediadorCrudEstudiantes implements MediadorCrud {
     private final ControlEstudiante control;

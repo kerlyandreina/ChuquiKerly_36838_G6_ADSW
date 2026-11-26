@@ -1,13 +1,13 @@
-package ec.edu.espe.analisis.crudestudiantes.datos;
+package ec.edu.espe.analisis.crudestudiantes.logica;
 
-import ec.edu.espe.analisis.crudestudiantes.logica.Iterador;
 import ec.edu.espe.analisis.crudestudiantes.modelo.Estudiante;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * PATRÓN ITERATOR: mantiene la posición y entrega los estudiantes uno a uno.
+ * Iterador concreto del PATRÓN ITERATOR: conserva la posición y entrega
+ * estudiantes de una instantánea sin exponer la colección del controlador.
  */
 public final class IteradorEstudiante implements Iterador {
     private final List<Estudiante> estudiantes;

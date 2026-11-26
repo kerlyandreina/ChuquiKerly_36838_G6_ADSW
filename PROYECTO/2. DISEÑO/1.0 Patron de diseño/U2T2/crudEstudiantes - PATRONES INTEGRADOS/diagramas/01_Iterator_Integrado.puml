@@ -1,19 +1,21 @@
 @startuml
-title Iterator integrado en el CRUD de estudiantes
+title Iterator en el CRUD de estudiantes
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam classAttributeIconSize 0
 skinparam defaultFontName Arial
 
-package "Presentacion" {
+package "Presentación" {
   class Main {
     +main(argumentos: String[]): void
-    -listar(mediador: MediadorCrud): void
+  }
+  class VentanaCrudEstudiantes {
+    -refrescarTabla(): void
   }
 }
 
-package "Logica" {
+package "Lógica" {
   interface MediadorCrud {
     +crearIterador(): Iterador
   }
@@ -22,22 +24,12 @@ package "Logica" {
     +crearIterador(): Iterador
   }
   class ControlEstudiante {
-    -repositorio: RepositorioEstudiante
-    +crearIterador(): Iterador
-  }
-  interface RepositorioEstudiante {
+    -estudiantes: Map<Integer, Estudiante>
     +crearIterador(): Iterador
   }
   interface Iterador {
     +haySiguiente(): boolean
     +siguiente(): Estudiante
-  }
-}
-
-package "Datos" {
-  class RepositorioEstudianteMemoria {
-    -estudiantes: Map<Integer, Estudiante>
-    +crearIterador(): Iterador
   }
   class IteradorEstudiante {
     -estudiantes: List<Estudiante>
@@ -51,12 +43,12 @@ package "Modelo" {
   class Estudiante
 }
 
-Main ..> MediadorCrud : solicita recorrido
+Main ..> VentanaCrudEstudiantes : abre
+VentanaCrudEstudiantes ..> MediadorCrud : solicita iterador
 MediadorCrudEstudiantes ..|> MediadorCrud
 MediadorCrudEstudiantes --> ControlEstudiante : delega
-ControlEstudiante --> RepositorioEstudiante : consulta
-RepositorioEstudianteMemoria ..|> RepositorioEstudiante
-RepositorioEstudianteMemoria ..> IteradorEstudiante : crea
+ControlEstudiante ..> IteradorEstudiante : crea sobre una copia
 IteradorEstudiante ..|> Iterador
-IteradorEstudiante --> Estudiante : entrega
+IteradorEstudiante --> Estudiante : entrega uno a uno
+VentanaCrudEstudiantes ..> Estudiante : muestra filas en JTable
 @enduml

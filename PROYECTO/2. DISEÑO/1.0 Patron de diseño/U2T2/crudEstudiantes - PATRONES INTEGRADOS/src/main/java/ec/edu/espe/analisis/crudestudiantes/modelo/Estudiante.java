@@ -2,10 +2,11 @@ package ec.edu.espe.analisis.crudestudiantes.modelo;
 
 import java.util.Objects;
 
+/** Contexto del PATRÓN STATE: delega la actualización en el estado actual. */
 public class Estudiante {
-    public final int id;
-    public String nombre;
-    public int edad;
+    private final int id;
+    private String nombre;
+    private int edad;
     private EstadoEstudiante estado;
 
     public Estudiante(int id, String nombre, int edad) {
@@ -22,12 +23,31 @@ public class Estudiante {
         return estado.actualizar(this, nombre, edad);
     }
 
+    /** PATRÓN STATE: reemplaza el comportamiento que se usará al actualizar. */
     public void cambiarEstado(EstadoEstudiante estado) {
         this.estado = Objects.requireNonNull(estado, "El estado no puede ser nulo.");
     }
 
     public String nombreEstado() {
         return estado.nombre();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    /** Solo los estados del mismo paquete pueden modificar los datos del contexto. */
+    void actualizarDatos(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
     }
 
     @Override

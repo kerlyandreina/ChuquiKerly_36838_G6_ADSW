@@ -1,0 +1,49 @@
+@startuml
+title Mediator en el CRUD de estudiantes
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+
+package "Presentación" {
+  class Main {
+    +main(argumentos: String[]): void
+  }
+  class VentanaCrudEstudiantes {
+    -registrarEstudiante(): void
+    -actualizarEstudiante(): void
+    -eliminarEstudiante(): void
+    -cambiarEstado(): void
+    -refrescarTabla(): void
+  }
+}
+
+package "Lógica" {
+  interface MediadorCrud {
+    +agregarEstudiante(id: int, nombre: String, edad: int): String
+    +actualizarEstudiante(id: int, nombre: String, edad: int): String
+    +eliminarEstudiante(id: int): String
+    +cambiarEstado(id: int, opcion: int): String
+    +crearIterador(): Iterador
+  }
+  class MediadorCrudEstudiantes {
+    -control: ControlEstudiante
+  }
+  class ControlEstudiante {
+    -estudiantes: Map<Integer, Estudiante>
+    +agregarEstudiante(...): String
+    +actualizarEstudiante(...): String
+    +eliminarEstudiante(...): String
+    +cambiarEstado(...): String
+    +crearIterador(): Iterador
+  }
+  interface Iterador
+}
+
+Main ..> MediadorCrudEstudiantes : crea mediador
+Main ..> VentanaCrudEstudiantes : abre la ventana
+VentanaCrudEstudiantes ..> MediadorCrud : envía solicitudes del CRUD
+MediadorCrudEstudiantes ..|> MediadorCrud
+MediadorCrudEstudiantes --> ControlEstudiante : delega operaciones
+@enduml

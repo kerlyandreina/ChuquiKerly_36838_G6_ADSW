@@ -15,9 +15,9 @@ package "Logica" {
 
 package "Modelo" {
   class Estudiante {
-    +id: int
-    +nombre: String
-    +edad: int
+    -id: int
+    -nombre: String
+    -edad: int
     -estado: EstadoEstudiante
     +actualizar(nombre: String, edad: int): String
     +cambiarEstado(estado: EstadoEstudiante): void
